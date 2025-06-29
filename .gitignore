@@ -1,0 +1,36 @@
+# Nix build artifacts
+/result
+/result-*
+*.drv
+*.lock
+
+# Sops-generated backup files
+*.bak
+
+# Secrets - encrypted files are tracked, decrypted are not
+secrets/*.dec.yaml
+secrets/**/*.dec.yaml
+secrets/**/*.bak
+*.age-key
+*.key
+*.pem
+*.gpg
+*.asc
+
+# Sops age private key (do NOT commit this!)
+age.key
+age.agekey
+
+# Editor / OS junk
+*.swp
+*.swo
+*.tmp
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
+
+# Direnv (if you use it)
+.envrc
+.direnv/

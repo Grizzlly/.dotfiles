@@ -1,6 +1,12 @@
 { pkgs, ... }:
-
+let
+  sops-nix = builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
+in
 {
+  imports = [
+    (import "${sops-nix}/modules/sops")
+  ];
+
   # Use the latest time zone
   time.timeZone = "UTC";
 

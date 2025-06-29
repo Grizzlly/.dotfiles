@@ -9,13 +9,11 @@
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
   nixos-wsl = builtins.fetchTarball "https://github.com/nix-community/NixOS-WSL/archive/refs/tags/2411.6.0.tar.gz";
-  sops-nix = builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
 in
 {
   imports = [
     ../../modules/common.nix
     (import "${nixos-wsl}/modules")
-    (import "${sops-nix}/modules/sops")
     (import "${home-manager}/nixos")
   ];
 
