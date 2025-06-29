@@ -100,11 +100,11 @@ in
       home.stateVersion = "24.11";
     };
 
-  environment.etc."ssh/config".text = ''
+  programs.ssh.extraConfig = ''
     Host github.com
-      IdentityFile /mnt/c/Users/stan_/.ssh/github
+      HostName github.com
+      IdentityFile ~/.ssh/github
       AddKeysToAgent yes
-      UseKeychain yes
       StrictHostKeyChecking accept-new
   '';
 
