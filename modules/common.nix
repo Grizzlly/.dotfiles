@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # Use the latest time zone
@@ -14,10 +14,11 @@
     openssh
   ];
 
+  networking.networkmanager.enable = true;
+
   # Allow unfree packages (like vscode, some drivers, etc.)
   nixpkgs.config.allowUnfree = true;
 
   # Set default shell for all users
   users.defaultUserShell = pkgs.bash;
 }
-

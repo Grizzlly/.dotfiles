@@ -15,36 +15,20 @@
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
   nixos-wsl = builtins.fetchTarball "https://github.com/nix-community/NixOS-WSL/archive/refs/tags/2411.6.0.tar.gz";
+  sops-nix = builtins.fetchTarball "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
 in
 {
   imports = [
     ../../modules/common.nix
     (import "${nixos-wsl}/modules")
-    # "${
-    #   builtins.fetchTarball {
-    #     url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
-    #     # replace this with an actual hash
-    #     #sha256 = "0000000000000000000000000000000000000000000000000000";
-    #   }
-    # }/modules/sops"
+    (import "${sops-nix}/modules/sops")
     (import "${home-manager}/nixos")
   ];
 
   wsl.enable = true;
   wsl.defaultUser = "nixos";
 
-  # Use the GRUB 2 boot loader.
-  #boot.loader.grub.enable = true;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  # Define on which hard drive you want to install Grub.
-  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
   networking.hostName = "wsl"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   #time.timeZone = "Europe/Bucharest";
@@ -100,18 +84,9 @@ in
       home.stateVersion = "24.11";
     };
 
-  programs.ssh.extraConfig = ''
-    Host github.com
-      HostName github.com
-      IdentityFile ~/.ssh/github
-      AddKeysToAgent yes
-      StrictHostKeyChecking accept-new
-  '';
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #vscode.fhs
     nixfmt-rfc-style
     nixd
   ];
@@ -125,6 +100,13 @@ in
   # };
 
   programs.nix-ld.enable = true;
+  programs.ssh.extraConfig = ''
+    Host github.com
+      HostName github.com
+      IdentityFile ~/.ssh/github
+      AddKeysToAgent yes
+      StrictHostKeyChecking accept-new
+  '';
 
   # List services that you want to enable:
 
