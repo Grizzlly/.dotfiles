@@ -5,6 +5,7 @@ in
 {
   imports = [
     (import "${sops-nix}/modules/sops")
+    ../features/common
   ];
 
   # Use the latest time zone
@@ -21,9 +22,6 @@ in
   ];
 
   networking.networkmanager.enable = true;
-
-  # Allow unfree packages (like vscode, some drivers, etc.)
-  nixpkgs.config.allowUnfree = true;
 
   # Set default shell for all users
   users.defaultUserShell = pkgs.bash;
